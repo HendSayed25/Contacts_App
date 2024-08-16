@@ -1,7 +1,10 @@
 package com.example.contacts_app;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -60,16 +63,36 @@ public class ContactActivity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean res=db.deleteData(phoneNumber.getText().toString());
-                if(res){
-                    Toast.makeText(ContactActivity.this,"Deleted Successfully",Toast.LENGTH_LONG).show();
-                    Intent i=new Intent(ContactActivity.this,MainActivity.class);
-                    adapter.notifyDataSetChanged();
-                    startActivity(i);
+                //show message to user to ensure if need to delete or not
+                AlertDialog.Builder alert = new AlertDialog.Builder(ContactActivity.this);
+                alert.setTitle("Delete contact?");
+                alert.setMessage("Are you sure to delete this contact");
+                alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //do your work here
+                        dialog.dismiss();
+                        boolean res=db.deleteData(phoneNumber.getText().toString());
+                        if(res){
+                            Toast.makeText(ContactActivity.this,"Deleted Successfully",Toast.LENGTH_LONG).show();
+                            Intent i=new Intent(ContactActivity.this,MainActivity.class);
+                            adapter.notifyDataSetChanged();
+                            startActivity(i);
 
-                }else{
-                    Toast.makeText(ContactActivity.this,"something wrong please try later",Toast.LENGTH_LONG).show();
-                }
+                        }else{
+                            Toast.makeText(ContactActivity.this,"something wrong please try later",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+                alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+                    }
+                });
+
+                alert.show();
             }
         });
         call.setOnClickListener(new View.OnClickListener() {
@@ -128,4 +151,5 @@ public class ContactActivity extends AppCompatActivity {
             }
         }
     }
+
 }

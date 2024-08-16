@@ -2,6 +2,7 @@ package com.example.contacts_app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,7 +34,10 @@ public class AddActivity extends AppCompatActivity {
                     user = new User(name.getText().toString(), phoneNumber.getText().toString());
                     if (db.insertUser(user)) {
                         Toast.makeText(AddActivity.this, "Added Successfully", Toast.LENGTH_LONG).show();
-                        adapter.addItem(user);
+                        adapter.users.add(user);
+                        Intent i=new Intent(AddActivity.this,MainActivity.class);
+                        startActivity(i);
+
                     } else {
                         Log.e("add", "error");
                     }

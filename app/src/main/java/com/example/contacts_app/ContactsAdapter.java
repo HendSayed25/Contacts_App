@@ -59,11 +59,6 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
         return users.size();
     }
 
-    public void addItem(User user){
-        users.add(user);
-        notifyDataSetChanged();
-    }
-
 
 
 }
