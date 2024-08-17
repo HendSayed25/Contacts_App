@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     ContactDataBase db;
     ContactsAdapter adapter;
     RecyclerView recycler;
-    SearchView search_icon;
 
 
     @Override
@@ -31,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
         add_btn=findViewById(R.id.add);
         recycler=findViewById(R.id.recyclerView);
-        search_icon=findViewById(R.id.search);
 
         db=new ContactDataBase(this,ContactDataBase.TABLE_USER,null,ContactDataBase.DATABASE_VERSION);
 
@@ -45,19 +43,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-     /*   search_icon.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                search(query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                search(newText);
-                return false;
-            }
-        });*/
 
 
 
@@ -67,23 +52,9 @@ public class MainActivity extends AppCompatActivity {
     public void showAllContacts(){
         ArrayList<User> users=new ArrayList<>();
         users=db.retrieveAllData();
-
         adapter=new ContactsAdapter(users,MainActivity.this);
         recycler.setAdapter(adapter);
 
     }
-    public void search(String search_res){
-        ArrayList<User>resualt=db.retrieveAllData();
-        ArrayList<User>new_res=new ArrayList<>();
-        for(int i=0;i<resualt.size();i++){
-            if(search_res==resualt.get(i).getName().toLowerCase()||search_res==resualt.get(i).getPhone()){
-                new_res.add(resualt.get(i));
-            }
-        }
-        adapter=new ContactsAdapter(new_res,MainActivity.this);
-        recycler.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 
-
-    }
 }
