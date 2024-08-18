@@ -1,6 +1,6 @@
 # Contacts_App
-Simple app to store Your Contacts in Your Phone, Update Them or Delete if You Want
-Useed database queries (java) 
+-Simple app to store Your Contacts in Your Phone, Update Them or Delete if You Want..
+-Useed database queries (java) 
 
 #ScreenShots:(Light Mode)
 ![Screenshot_2024-08-18-22-04-44-088_com example contacts_app](https://github.com/user-attachments/assets/23af8e32-7507-4506-939d-ca7c24acf7f0)
