@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     ContactDataBase db;
     ContactsAdapter adapter;
     RecyclerView recycler;
+    SearchView search_icon;
 
 
     @Override
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         add_btn=findViewById(R.id.add);
         recycler=findViewById(R.id.recyclerView);
+        search_icon=findViewById(R.id.search);
 
         db=new ContactDataBase(this,ContactDataBase.TABLE_USER,null,ContactDataBase.DATABASE_VERSION);
 
@@ -43,7 +45,20 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        search_icon.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.filter(newText);
+                recycler.setAdapter(adapter);
+
+                return true;
+            }
+        });
 
 
 

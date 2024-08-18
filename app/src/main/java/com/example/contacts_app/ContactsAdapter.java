@@ -2,6 +2,7 @@ package com.example.contacts_app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ContactViewHolder> {
-    ArrayList<User>users;
+    ArrayList<User>users,contactListFull;//used in search
     Context context;
 
     public ContactsAdapter(ArrayList<User> users,Context context) {
         this.users = users;
         this.context = context;
+        this.contactListFull=new ArrayList<>(this.users);//used to restore all contacts
     }
 
     public class ContactViewHolder extends RecyclerView.ViewHolder {
@@ -59,6 +61,22 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
         return users.size();
     }
 
+    public void filter(String query) {
+        if (query.isEmpty()) {
+            users.clear();
+            users.addAll(contactListFull); // Restore the original list
+        } else {
+            ArrayList<User> filteredList = new ArrayList<>();
+            for (User contact : contactListFull) {
+                if (contact.getName().toLowerCase().contains(query.toLowerCase())) {
+                    filteredList.add(contact);
+                }
+            }
+            users.clear();
+            users.addAll(filteredList);
+        }
+        notifyDataSetChanged();
+    }
 
 
 }
